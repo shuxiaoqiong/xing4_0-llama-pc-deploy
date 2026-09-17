@@ -4,7 +4,7 @@ rem  XingChen4-29B Server - Edit parameters below
 rem ================================================================
 
 rem  Model file name (place GGUF files in this same folder)
-set MODEL=xingchen4-iq4-00001-of-00002.gguf
+set MODEL=xing4_0-29b-mtp-IQ4_NL.gguf
 
 rem  GPU layers (-1 or 999 = all, 0 = CPU only)
 set NGL=999
@@ -35,7 +35,7 @@ rem ================================================================
 rem  Do not edit below unless you know what you are doing
 rem ================================================================
 
-echo Starting XingChen4-29B Server...
+echo Starting Xing4.0-29B-A4B Server...
 echo   Model:  %MODEL%
 echo   Port:   %PORT%
 echo   NGL:    %NGL%
