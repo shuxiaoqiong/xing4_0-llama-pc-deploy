@@ -49,7 +49,7 @@ Xing4.0-29B-A4B 是 MoE 架构大模型（MLA + MoE + HC 定制），总参数 2
 Step 1：解压部署包
 将整个文件夹拷贝到目标机器任意目录（如 D:\xingchen4-deploy\）。
 Step 2：放入模型文件
-如果模型文件不在部署包中，将两个 GGUF 分片放入部署目录，与 run-server.bat 同级，最终结构如下：
+如果模型文件不在部署包中，将 GGUF 权重放入部署目录，与 run-server.bat 同级，最终结构如下：
 ```
 D:\xingchen4-deploy\
   ├── llama-server.exe
