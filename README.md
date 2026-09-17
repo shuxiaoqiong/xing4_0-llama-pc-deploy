@@ -42,22 +42,23 @@ Xing4.0-29B-A4B 是 MoE 架构大模型（MLA + MoE + HC 定制），总参数 2
 | `cublas64_13.dll` | CUDA 矩阵运算库 | ~51 MB |
 | `cublasLt64_13.dll` | CUDA 矩阵运算库（轻量版） | ~453 MB |
 | `run-server.bat` | 一键启动脚本 | ~2 KB |
-| `xing4_0-29b-mtp-IQ4_NL.gguf` | 模型权重 | ~19 GB |
 
 模型即将开源，欢迎关注TeleAI的huggingface仓库：https://huggingface.co/Tele-AI
 ### 2.3 部署步骤
 Step 1：解压部署包
-将整个文件夹拷贝到目标机器任意目录（如 D:\xingchen4-deploy\）。
+将整个文件夹拷贝到目标机器任意目录（如 D:\xing4_0-llama-pc-deploy\）。
 Step 2：放入模型文件
 如果模型文件不在部署包中，将 GGUF 权重放入部署目录，与 run-server.bat 同级，最终结构如下：
 ```
-D:\xingchen4-deploy\
+D:\xing4_0-llama-pc-deploy\
   ├── llama-server.exe
   ├── cudart64_13.dll
   ├── cublas64_13.dll
   ├── cublasLt64_13.dll
   ├── run-server.bat
-  ├── xing4_0-29b-mtp-IQ4_NL.gguf    ← 放这里
+  ├── xing4_0-29b-IQ4_NL-00001-of-00003.gguf ← 放这里
+  ├── xing4_0-29b-IQ4_NL-00002-of-00003.gguf ← 放这里
+  ├── xing4_0-29b-IQ4_NL-00003-of-00003.gguf ← 放这里
 ```
 Step 3：双击启动
 双击 run-server.bat，会弹出命令行窗口显示启动日志，随后浏览器自动打开对话页面。
@@ -70,7 +71,7 @@ listening on http://0.0.0.0:8086
 ### 2.4 自定义参数
 用记事本打开 run-server.bat，修改文件顶部的参数值即可，无需碰下方的启动逻辑：
 ```
-set MODEL=xing4_0-29b-mtp-IQ4_NL.gguf   rem 模型文件名
+set MODEL=xing4_0-29b-IQ4_NL-00001-of-00003.gguf   rem 模型文件名
 set NGL=999                                    rem GPU层数（0=纯CPU）
 set CTX=65536                                  rem 上下文长度
 set NTOKENS=8192                               rem 最大生成token数
@@ -108,7 +109,7 @@ nvcc --version
 ### 3.3 运行脚本
 在 PowerShell 中执行：
 ```
-.\deploy-xingchen4.ps1
+.\Deploy-Xing4.0-29B-A4B.ps1
 ```
 脚本会自动完成以下 7 个步骤：
 ```
