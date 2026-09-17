@@ -104,7 +104,7 @@ nvcc --version
 ```
 三条命令都有输出，说明环境就绪。
 ### 3.2 获取脚本
-将部署脚本 [Deploy-Xing4.0-29B-A4B.ps1](https://github.com/shuxiaoqiong/xingchen-llama-pc-deploy/releases/download/deploy-with-compile/Deploy-Xing4.0-29B-A4B.ps1) 放到当前工作目录，脚本会在此目录下自动克隆 llama.cpp 仓库。
+将部署脚本 [Deploy-Xing4.0-29B-A4B.ps1](https://github.com/shuxiaoqiong/xing4_0-llama-pc-deploy/blob/main/Deploy-Xing4.0-29B-A4B.ps1) 放到当前工作目录，脚本会在此目录下自动克隆 llama.cpp 仓库。
 ### 3.3 运行脚本
 在 PowerShell 中执行：
 ```
