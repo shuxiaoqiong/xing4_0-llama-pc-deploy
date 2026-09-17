@@ -1,26 +1,26 @@
 <#
 .SYNOPSIS
-    XingChen4-29B llama.cpp one-click deploy script (Windows, GPU or CPU)
+    Xing4.0-29B-A4B llama.cpp one-click deploy script (Windows, GPU or CPU)
 .DESCRIPTION
     1. Check dependencies (git, cmake, VS2022, nvcc)
     2. Auto-detect CUDA Toolkit path (skipped in CPU mode)
-    3. Clone / update llama.cpp repo
-    4. Switch to xingchen4-port branch
+    3. Clone / update llama.cpp repo 
+    4. Switch to xing4_0-port branch
     5. Download Web UI assets (from HF mirror)
     6. Build llama.cpp (GPU or CPU backend)
     7. Launch llama-server and auto-open browser
 .NOTES
     All environment-sensitive paths (CUDA, VS, model, static files) are auto-detected.
     Usage:
-      .\deploy-xingchen4.ps1                  # default: GPU
-      .\deploy-xingchen4.ps1 -Backend cpu     # CPU mode
-      .\deploy-xingchen4.ps1 -Port 8086
+      .\Deploy-Xing4.0-29B-A4B.ps1                  # default: GPU
+      .\Deploy-Xing4.0-29B-A4B.ps1 -Backend cpu     # CPU mode
+      .\Deploy-Xing4.0-29B-A4B.ps1 -Port 8086
 #>
 
 #Requires -Version 5.1
 [CmdletBinding()]
 param(
-    [string]$ModelPath   = "xingchen4-iq4-00001-of-00002.gguf",
+    [string]$ModelPath   = "xing4_0-29b-mtp-IQ4_NL.gguf",
     [int]   $ContextSize = 262144,
     [ValidateSet('gpu','cpu',IgnoreCase=$true)]
     [string]$Backend    = "gpu",
@@ -192,8 +192,8 @@ function Test-RepoReady {
 }
 
 if (Test-Path (Join-Path $llamaCppDir ".git")) {
-    if (Test-RepoReady -Dir $llamaCppDir -Branch "xingchen4-port") {
-        Write-OK "Repo already on xingchen4-port branch with clean worktree, skipping git pull"
+    if (Test-RepoReady -Dir $llamaCppDir -Branch "xing4_0-port") {
+        Write-OK "Repo already on xing4_0-port branch with clean worktree, skipping git pull"
     } else {
         Write-Info "llama.cpp exists, running git pull ..."
         Push-Location $llamaCppDir
@@ -214,19 +214,19 @@ Write-OK "llama.cpp ready"
 # ============================================================================
 # 4. Switch to xingchen4-port branch
 # ============================================================================
-Write-Step "4/7  Switch to xingchen4-port branch"
+Write-Step "4/7  Switch to xing4_0-port branch"
 
 Push-Location $llamaCppDir
 try {
     $currentBranch = git rev-parse --abbrev-ref HEAD
 
-    if ($currentBranch -eq "xingchen4-port" -and -not (git status --porcelain)) {
-        Write-OK "Already on xingchen4-port, skipping fetch/checkout"
+    if ($currentBranch -eq "xing4_0-port" -and -not (git status --porcelain)) {
+        Write-OK "Already on xing4_0-port, skipping fetch/checkout"
     } else {
         git fetch origin 2>&1 | ForEach-Object { Write-Info $_ }
         if ($LASTEXITCODE -ne 0) { Exit-Script "git fetch failed (exit $LASTEXITCODE)" }
 
-        $branchExists = git branch --list "xingchen4-port" 2>$null
+        $branchExists = git branch --list "xing4_0-port" 2>$null
         if ($branchExists) {
             git checkout xingchen4-port 2>&1 | ForEach-Object { Write-Info $_ }
         } else {
@@ -234,7 +234,7 @@ try {
         }
 
         $currentBranch = git rev-parse --abbrev-ref HEAD
-        if ($currentBranch -ne "xingchen4-port") {
+        if ($currentBranch -ne "xing4_0-port") {
             Exit-Script "Branch switch failed. Current: $currentBranch"
         }
     }
@@ -385,7 +385,7 @@ if ($needBuild) {
 # ============================================================================
 # 7. Launch server + auto-open browser
 # ============================================================================
-Write-Step "7/7  Launch XingChen4-29B"
+Write-Step "7/7  Launch xing4_0-port"
 
 # Check model file (supports sharded *-00001-of-*.gguf)
 if (-not (Test-Path $ModelPath)) {
@@ -398,14 +398,8 @@ if (-not (Test-Path $ModelPath)) {
     }
 }
 
-# Sharded model info
-if ($ModelPath -match '-00001-of-\d+\.gguf$') {
-    $modelDir  = Split-Path $ModelPath -Parent
-    $shardPattern = [System.IO.Path]::GetFileName($ModelPath) -replace '00001-of-\d+', '*'
-    $shards = Get-ChildItem $modelDir -Filter $shardPattern -ErrorAction SilentlyContinue
-    Write-OK "Sharded model detected, $($shards.Count) files:"
-    $shards | ForEach-Object { Write-Info "$($_.Name)  ($([math]::Round($_.Length / 1GB, 2)) GB)" }
-}
+# Model info (single-file GGUF)
+Write-OK "Model: $([System.IO.Path]::GetFileName($ModelPath))  ($([math]::Round((Get-Item $ModelPath).Length / 1GB, 2)) GB)"
 
 # Auto-detect static files directory (--path)
 # Priority: build output > source tree UI dist
