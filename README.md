@@ -34,7 +34,7 @@ Xing4.0-29B-A4B 是 MoE 架构大模型（MLA + MoE + HC 定制），总参数 2
 ●已安装 NVIDIA 显卡驱动
 ●不想安装开发工具链（Git / CMake / VS2022 / CUDA Toolkit）
 ### 2.2 部署包内容
-部署包是一个[tar压缩包](https://github.com/shuxiaoqiong/xingchen-llama-pc-deploy/releases/download/deploy-without-compile/xingchen4-deploy.tar)，包含以下文件：
+部署包是一个[tar压缩包](https://github.com/shuxiaoqiong/xing4_0-llama-pc-deploy/releases/download/deploy-without-compile/Xing4.0-29B-A4B-deploy.rar)，包含以下文件：
 | 文件 | 说明 | 大小 |
 |---|---|---|
 | `llama-server.exe` | 静态编译的推理引擎（含嵌入式 Web UI） | ~43 MB |
