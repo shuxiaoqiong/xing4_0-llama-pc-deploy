@@ -1,4 +1,4 @@
-# xingchen-llama-pc-deploy
+# Xing4.0-29B-A4B-llama-pc-deploy
 
 https://github.com/user-attachments/assets/6fad2612-27a9-497c-b03e-340e98c8e86f
 
@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/6fad2612-27a9-497c-b03e-340e98c8e86f
 两种方案，从零到对话只需 10 分钟
 
 ## 一、模型简介
-XingChen4-29B 是 DeepSeek-V4 风格的 MoE 架构大模型（MLA + MoE + HC 定制），总参数 29B，int4权重采用 IQ4_NL 混合精度量化，量化后约 18GB（两个 GGUF 分片），可在单张消费级 GPU 上运行。  
+Xing4.0-29B-A4B 是 MoE 架构大模型（MLA + MoE + HC 定制），总参数 29B，int4权重采用 IQ4_NL 混合精度量化，量化后约 19GB，可在单张消费级 GPU 上运行。  
 ### 硬件环境
 本次测试环境如下：  
 | **项目** | **配置** |
@@ -17,13 +17,16 @@ XingChen4-29B 是 DeepSeek-V4 风格的 MoE 架构大模型（MLA + MoE + HC 定
 | 推理框架 | llama.cpp |
 ### 部署方案
 本文提供两种部署方案，按需选择：
-| | 方案一：一键编译 | 方案二：免编译分发 |
-|---|---|---|
-| **适合人群** | 开发者、需要灵活定制 | 普通用户、快速上手 |
-| **前提条件** | 安装 Git、CMake、VS2022、CUDA Toolkit | 仅需 NVIDIA 显卡驱动 |
-| **操作步骤** | 运行 PowerShell 脚本，自动编译启动 | 解压、放模型、双击 bat |
-| **耗时** | 首次约 15-30 分钟（编译） | 3 分钟（解压 + 启动） |
-| **文件大小** | 脚本约 16KB | 预编译包约 390MB |
+| 对比项 | 方案一：免编译分发 | 方案二：一键编译 |
+| :--- | :--- | :--- |
+| **适合人群** | 普通用户、快速上手 | 开发者、需要灵活定制 |
+| **操作步骤** | 解压、放模型、双击 bat 运行 | PowerShell 脚本，自动编译启动 |
+| **耗时** | 约 3 分钟（解压 + 启动） | 首次约 15-30 分钟（编译） |
+| **文件大小** | 预编译包约 390MB | 脚本约 16KB |
+| **环境要求** | 仅显卡驱动 | Git + CMake + VS2022 + CUDA Toolkit |
+| **灵活性** | 仅可调启动参数 | 可修改源码、切换分支、调整编译选项 |
+| **可移植性** | 3090（sm_86）及以上架构 GPU | 任意 Windows + CUDA 机器 |
+| **更新方式** | 重新分发部署包 | `git pull` + 重新编译 |
 
 ## 二、方案一：一键编译部署
 ### 2.1 环境准备
@@ -40,7 +43,7 @@ nvcc --version
 ```
 三条命令都有输出，说明环境就绪。
 ### 2.2 获取脚本
-将部署脚本 [deploy-xingchen4.ps1](https://github.com/shuxiaoqiong/xingchen-llama-pc-deploy/releases/download/deploy-with-compile/deploy-xingchen4.ps1) 放到当前工作目录，脚本会在此目录下自动克隆 llama.cpp 仓库。
+将部署脚本 [Deploy-Xing4.0-29B-A4B.ps1](https://github.com/shuxiaoqiong/xingchen-llama-pc-deploy/releases/download/deploy-with-compile/Deploy-Xing4.0-29B-A4B.ps1) 放到当前工作目录，脚本会在此目录下自动克隆 llama.cpp 仓库。
 ### 2.3 运行脚本
 在 PowerShell 中执行：
 ```
@@ -52,7 +55,7 @@ nvcc --version
 Step 1	检查依赖（Git、CMake、VS2022、nvcc）
 Step 2	自动检测 CUDA Toolkit 路径
 Step 3	克隆 / 更新 llama.cpp 仓库
-Step 4	切换到 xingchen4-port 分支
+Step 4	切换到 xing4_0-port 分支
 Step 5	下载 Web UI 静态资源（从 HF 镜像）
 Step 6	编译 llama.cpp（GPU 或 CPU 后端）
 Step 7	启动 llama-server 并自动打开浏览器
@@ -61,13 +64,13 @@ Step 7	启动 llama-server 并自动打开浏览器
 脚本支持以下参数，按需指定：
 ```
 # CPU 模式（不使用 GPU）
-.\deploy-xingchen4.ps1 -Backend cpu
+.\Deploy-Xing4.0-29B-A4B.ps1 -Backend cpu
 # 自定义端口
-.\deploy-xingchen4.ps1 -Port 8086
+.\Deploy-Xing4.0-29B-A4B.ps1 -Port 8086
 # 自定义模型路径
-.\deploy-xingchen4.ps1 -ModelPath "D:\models\xingchen4-iq4-00001-of-00002.gguf"
+.\Deploy-Xing4.0-29B-A4B.ps1 -ModelPath "D:\models\xing4_0-29b-mtp-IQ4_NL.gguf"
 # 自定义上下文长度
-.\deploy-xingchen4.ps1 -ContextSize 65536
+.\Deploy-Xing4.0-29B-A4B.ps1 -ContextSize 65536
 ```
 完整参数列表：
 | 参数 | 默认值 | 说明 |
@@ -102,8 +105,7 @@ Step 7	启动 llama-server 并自动打开浏览器
 | `cublas64_13.dll` | CUDA 矩阵运算库 | ~51 MB |
 | `cublasLt64_13.dll` | CUDA 矩阵运算库（轻量版） | ~453 MB |
 | `run-server.bat` | 一键启动脚本 | ~2 KB |
-| `xingchen4-iq4-00001-of-00002.gguf` | 模型分片 1 | ~9.7 GB |
-| `xingchen4-iq4-00002-of-00002.gguf` | 模型分片 2 | ~9.0 GB |
+| `xing4_0-29b-mtp-IQ4_NL.gguf` | 模型权重 | ~19 GB |
 
 模型即将开源，欢迎关注TeleAI的huggingface仓库：https://huggingface.co/Tele-AI
 ### 3.3 部署步骤
@@ -118,8 +120,7 @@ D:\xingchen4-deploy\
   ├── cublas64_13.dll
   ├── cublasLt64_13.dll
   ├── run-server.bat
-  ├── xingchen4-iq4-00001-of-00002.gguf    ← 放这里
-  └── xingchen4-iq4-00002-of-00002.gguf    ← 放这里
+  ├── xing4_0-29b-mtp-IQ4_NL.gguf    ← 放这里
 ```
 Step 3：双击启动
 双击 run-server.bat，会弹出命令行窗口显示启动日志，随后浏览器自动打开对话页面。
@@ -132,7 +133,7 @@ listening on http://0.0.0.0:8086
 ### 3.4 自定义参数
 用记事本打开 run-server.bat，修改文件顶部的参数值即可，无需碰下方的启动逻辑：
 ```
-set MODEL=xingchen4-iq4-00001-of-00002.gguf   rem 模型文件名
+set MODEL=xing4_0-29b-mtp-IQ4_NL.gguf   rem 模型文件名
 set NGL=999                                    rem GPU层数（0=纯CPU）
 set CTX=65536                                  rem 上下文长度
 set NTOKENS=8192                               rem 最大生成token数
@@ -151,18 +152,7 @@ set STATICPATH=                                rem Web UI目录（空=用内置�
 | 更换端口 | `set PORT=8086` |
 | 仅本机访问 | `set HOST=127.0.0.1` |
 
-## 四、两种方案对比
-| 维度 | 方案一：一键编译 | 方案二：免编译分发 |
-|---|---|---|
-| 首次耗时 | 15-30 分钟 | 3 分钟 |
-| 环境要求 | Git + CMake + VS2022 + CUDA Toolkit | 仅显卡驱动 |
-| 灵活性 | 可修改源码、切换分支、调整编译选项 | 仅可调启动参数 |
-| 可移植性 | 任意 Windows + CUDA 机器 | 需同型号 GPU |
-| 更新方式 | git pull + 重新编译 | 重新分发部署包 |
-| 适用场景 | 开发调试、提交 PR、适配新模型 | 快速部署 |
-建议：如果你是开发者，用方案一；如果你只是想跑起来用，用方案二。
-
-## 五、常见问题
+## 四、常见问题
 Q: 启动后浏览器显示 “Server unavailable”    
 A:检查命令行窗口是否有报错。常见原因：模型文件路径不对、端口被占用、GPU 显存不足。
  
@@ -176,5 +166,5 @@ Q: 显存不够（oom）
 A:减小上下文大小（-c 32768 或更小）、使用 KV 缓存量化（--cache-type-k q4_0 --cache-type-v q4_0）、减少 GPU 层数（-ngl 值）。
 
 Q: CPU 模式怎么用  
-A:方案一：.\deploy-xingchen4.ps1 -Backend cpu
+A:方案一：.\Deploy-Xing4.0-29B-A4B.ps1 -Backend cpu
   方案二：编辑 run-server.bat，将 set NGL=0。
