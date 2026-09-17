@@ -1,6 +1,6 @@
 @echo off
 rem ================================================================
-rem  XingChen4-29B Server - Edit parameters below
+rem  Xing4.0-29B-A4B Server - Edit parameters below
 rem ================================================================
 
 rem  Model file name (place GGUF files in this same folder)
