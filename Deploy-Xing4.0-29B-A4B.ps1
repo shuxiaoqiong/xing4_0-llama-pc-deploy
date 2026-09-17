@@ -212,7 +212,7 @@ if (-not (Test-Path $llamaCppDir)) {
 Write-OK "llama.cpp ready"
 
 # ============================================================================
-# 4. Switch to xingchen4-port branch
+# 4. Switch to xing4_0-port branch
 # ============================================================================
 Write-Step "4/7  Switch to xing4_0-port branch"
 
@@ -228,9 +228,9 @@ try {
 
         $branchExists = git branch --list "xing4_0-port" 2>$null
         if ($branchExists) {
-            git checkout xingchen4-port 2>&1 | ForEach-Object { Write-Info $_ }
+            git checkout xing4_0-port 2>&1 | ForEach-Object { Write-Info $_ }
         } else {
-            git checkout -b xingchen4-port origin/xingchen4-port 2>&1 | ForEach-Object { Write-Info $_ }
+            git checkout -b xing4_0-port origin/xing4_0-port 2>&1 | ForEach-Object { Write-Info $_ }
         }
 
         $currentBranch = git rev-parse --abbrev-ref HEAD
