@@ -20,7 +20,7 @@
 #Requires -Version 5.1
 [CmdletBinding()]
 param(
-    [string]$ModelPath   = "xing4_0-29b-mtp-IQ4_NL.gguf",
+    [string]$ModelPath   = "xing4_0-29b-IQ4_NL-00001-of-00003.gguf",
     [int]   $ContextSize = 262144,
     [ValidateSet('gpu','cpu',IgnoreCase=$true)]
     [string]$Backend    = "gpu",
