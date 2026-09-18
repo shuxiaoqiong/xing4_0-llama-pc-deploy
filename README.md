@@ -43,8 +43,8 @@ Xing4.0-29B-A4B 是 MoE 架构大模型（MLA + MoE + HC 定制），总参数 2
 | `cublasLt64_13.dll` | CUDA 矩阵运算库（轻量版） | ~453 MB |
 | `run-server.bat` | 一键启动脚本 | ~2 KB |
 
-模型已经开源，欢迎关注TeleAI:
-huggingface仓库：https://huggingface.co/XingChen-AGI/Xing4.0-29B-A4B-GGUF
+模型已经开源，欢迎关注TeleAI:  
+huggingface仓库：https://huggingface.co/XingChen-AGI/Xing4.0-29B-A4B-GGUF  
 modelscope仓库：https://www.modelscope.cn/models/XingChen-AGI/Xing4.0-29B-A4B-GGUF
 
 ### 2.3 部署步骤
