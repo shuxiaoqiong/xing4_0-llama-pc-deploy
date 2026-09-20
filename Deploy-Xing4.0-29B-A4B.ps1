@@ -20,7 +20,7 @@
 #Requires -Version 5.1
 [CmdletBinding()]
 param(
-    [string]$ModelPath   = "xing4_0-29b-IQ4_NL-00001-of-00003.gguf",
+    [string]$ModelPath   = "xing4_0-29b-IQ4_NL.gguf",
     [int]   $ContextSize = 262144,
     [ValidateSet('gpu','cpu',IgnoreCase=$true)]
     [string]$Backend    = "gpu",
@@ -387,7 +387,7 @@ if ($needBuild) {
 # ============================================================================
 Write-Step "7/7  Launch xing4_0-port"
 
-# Check model file (supports sharded *-00001-of-*.gguf)
+# Check model file
 if (-not (Test-Path $ModelPath)) {
     Write-Warn2 "Model not found: $ModelPath"
     Write-Info "Place GGUF model at the specified path, or enter it below."
