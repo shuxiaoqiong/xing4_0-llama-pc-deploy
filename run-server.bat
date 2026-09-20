@@ -4,7 +4,7 @@ rem  Xing4.0-29B-A4B Server - Edit parameters below
 rem ================================================================
 
 rem  Model file name (place GGUF files in this same folder)
-set MODEL=xing4_0-29b-IQ4_NL-00001-of-00003.gguf
+set MODEL=xing4_0-29b-IQ4_NL.gguf
 
 rem  GPU layers (-1 or 999 = all, 0 = CPU only)
 set NGL=999
