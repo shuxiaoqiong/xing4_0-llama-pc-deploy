@@ -73,7 +73,7 @@ listening on http://0.0.0.0:8086
 ### 2.4 自定义参数
 用记事本打开 run-server.bat，修改文件顶部的参数值即可，无需碰下方的启动逻辑：
 ```
-set MODEL=xing4_0-29b-IQ4_NL.gguf   rem 模型文件名
+set MODEL=xing4_0-29b-IQ4_NL.gguf              rem 模型文件名
 set NGL=999                                    rem GPU层数（0=纯CPU）
 set CTX=65536                                  rem 上下文长度
 set NTOKENS=8192                               rem 最大生成token数
